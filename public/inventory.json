@@ -1,0 +1,20 @@
+[
+  {
+    "id": "giftcard-25",
+    "name": "Geschenkkarte 25€",
+    "price": 25,
+    "image": "https://picsum.photos/seed/gift/300/200",
+    "url": "/shop/giftcard-25",
+    "sku": "GC-25",
+    "category": "Gutscheine"
+  },
+  {
+    "id": "starter-kit-bread",
+    "name": "Back-Kit: Brot Starter",
+    "price": 39.9,
+    "image": "https://picsum.photos/seed/breadkit/300/200",
+    "url": "/shop/starter-kit-bread",
+    "sku": "BK-BREAD-001",
+    "category": "Kits"
+  }
+]
