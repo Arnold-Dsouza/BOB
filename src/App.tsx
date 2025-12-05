@@ -1,26 +1,52 @@
-import { Link, Routes, Route } from 'react-router-dom'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Home from './routes/Home'
-import Cart from './routes/Cart'
-import Impressum from './routes/Impressum'
-import { CartProvider } from './context/CartContext'
-import { InventoryProvider } from './context/InventoryContext'
+import { useState, useEffect } from 'react';
+import { Header } from './components/Header';
+import { HeroSection } from './components/HeroSection';
+import { BackshopSection } from './components/BackshopSection';
+import { KurseSection } from './components/KurseSection';
+import { EventsSection } from './components/EventsSection';
+import { ContactBanner } from './components/ContactBanner';
+import { Footer } from './components/Footer';
+import { ShoppingCart } from './components/ShoppingCart';
+import { OnlineShop } from './components/OnlineShop';
 
 export default function App() {
+  const [currentPage, setCurrentPage] = useState<'home' | 'cart' | 'shop'>('home');
+
+  useEffect(() => {
+    const path = window.location.pathname;
+    if (path === '/cart') {
+      setCurrentPage('cart');
+    } else if (path === '/shop') {
+      setCurrentPage('shop');
+    } else {
+      setCurrentPage('home');
+    }
+  }, []);
+
+  const handleNavigation = (page: 'home' | 'cart' | 'shop') => {
+    setCurrentPage(page);
+    window.history.pushState({}, '', page === 'home' ? '/' : `/${page}`);
+  };
+
+  if (currentPage === 'cart') {
+    return <ShoppingCart onNavigate={handleNavigation} />;
+  }
+
+  if (currentPage === 'shop') {
+    return <OnlineShop onNavigate={handleNavigation} />;
+  }
+
   return (
-    <CartProvider>
-      <InventoryProvider>
-        <div className="app">
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/impressum" element={<Impressum />} />
-          </Routes>
-          <Footer />
-        </div>
-      </InventoryProvider>
-    </CartProvider>
-  )
+    <div className="relative">
+      <Header onNavigate={handleNavigation} />
+      <main>
+        <HeroSection />
+        <BackshopSection />
+        <KurseSection />
+        <EventsSection />
+        <ContactBanner />
+        <Footer />
+      </main>
+    </div>
+  );
 }
